@@ -23,16 +23,16 @@ export default function Home (){
 
 ///////////////////// PAGINATION ///////////////////////// 
 
-const [currentPage, setCurrentPage] = useState(1) // Pagina actyual que inicia en 1
-const [reciperPerPagae, setRecipePerPage] = useState(9) // Cantidad de recetas que se muestran por pagina
-const indexOfLastRecipe = currentPage * reciperPerPagae // Esto me indica, la cantidad de recetas por pagina (pagina multiplicado la cantidad de recetas por pagina => 9)
-const indexOfFirstRecipe = indexOfLastRecipe - reciperPerPagae // 
-const currentRecipe = allRecipe.slice(indexOfFirstRecipe, indexOfLastRecipe) // selecciona las recetas segun los index de la pagina actual.
+// const [currentPage, setCurrentPage] = useState(1) // Pagina actyual que inicia en 1
+// const [reciperPerPagae, setRecipePerPage] = useState(9) // Cantidad de recetas que se muestran por pagina
+// const indexOfLastRecipe = currentPage * reciperPerPagae // Esto me indica, la cantidad de recetas por pagina (pagina multiplicado la cantidad de recetas por pagina => 9)
+// const indexOfFirstRecipe = indexOfLastRecipe - reciperPerPagae // 
+// const currentRecipe = allRecipe.slice(indexOfFirstRecipe, indexOfLastRecipe) // selecciona las recetas segun los index de la pagina actual.
 
 
-const pagination = (pageNumber)=>{
-    setCurrentPage(pageNumber)
-}
+// const pagination = (pageNumber)=>{
+//     setCurrentPage(pageNumber)
+// }
 
 //////////////////////////////////////////////////////////
 
@@ -48,13 +48,41 @@ return (
                 <h1>Recipe List:</h1>
                 <Link to = '/recipes'>Find Recipes </Link>
                 <button onClick={ e => {handleClick (e)}}>Refresh</button>
-                {currentRecipe?.map(({id, name, diets, healthScore, image})=>{
-                     <Card key={id} name={name} image={image} diets={diets} healthScore={healthScore} id={id}/>})}
+                {allRecipe?.map((r)=>{
+                    return (
+                        <div classname='cartas'>
+                            <Link to={"/home" + r.id}>
+                                <Card 
+                                name={r.name} 
+                                image={r.image} 
+                                diets={r.diets} 
+                                healtScore={r.healtScore} 
+                                id={r.id}/>
+                            </Link>
+                        </div>  
+                    )                  
+                })}
             </div>
 
-            <div>
+            {/* <div>
                 <Pagination reciperPerPagae={reciperPerPagae} allRecipe={allRecipe.length} pagination={pagination} />
-            </div>
+            </div> */}
         </div>
 )
 }
+
+{/* <div className='allRecipes'>
+                {recipesPage?.map(e => {
+                    return(
+                    <div className='cardgrid'>
+                        <Link to={'/home/'+ e.id}>
+                        <CardRecipe
+                        name={e.name} 
+                        image= {e.image} 
+                        diets={e.diets}
+                        healthScore={e.healthScore}
+                        id={e.id}/>
+                        </Link>
+                    </div>
+                )})}
+            </div> */}

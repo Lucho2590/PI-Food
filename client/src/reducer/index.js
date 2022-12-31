@@ -1,7 +1,7 @@
 const initialState = {
     recipes: [],
-    diets: [],
-    recipe: {},
+    // diets: [],
+    // recipe: {},
 }
 
 function rootReducer(state = initialState, action) {
@@ -11,7 +11,6 @@ function rootReducer(state = initialState, action) {
         default:
             return state;
     }
-
 }
 
 

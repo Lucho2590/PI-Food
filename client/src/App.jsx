@@ -8,14 +8,8 @@ function App() {
   return (
   <BrowserRouter>
     <div className="App">
-    <Switch>
-          <Route exact path="/">
-            <LandingPage />
-          </Route>
-          <Route path="/home">
-            <Home />
-          </Route>
-    </Switch>
+          <Route exact path="/" component={LandingPage}/>
+          <Route path="/home" component={Home}/>
       {/* <h1>hjgdgjhdhgdf</h1> */}
     </div>
     </BrowserRouter>

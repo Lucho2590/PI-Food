@@ -35,7 +35,7 @@ router.get('/:idReceta', async(req, res, next) => {
             let byId = await recipeFoundById.filter(r => r.id.toString() === idReceta.toString())
             byId.length ?
                 res.status(200).send(byId) :
-                res.status(404).send('Receta no encontrada con ese ID')
+                res.status(404).send('Recipe not found with that ID')
         }
     } catch (e) {
         next(e)
@@ -64,7 +64,7 @@ router.post('/', async(req, res, next) => {
         })
         await recipeCreated.addDiet(dietCreated)
 
-        res.status(200).send('Receta creada exitosamente')
+        res.status(200).send('Recipe created successfully')
     } catch (error) {
         next(error)
     }

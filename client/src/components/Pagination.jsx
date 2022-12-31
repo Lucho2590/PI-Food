@@ -5,21 +5,20 @@ export default function Pagination({recipePerPage, allRecipe, pagination}){
     const pageNumber = [];
 
     for (let i = 0; i <= Math.ceil(allRecipe/recipePerPage); i++){
-        pageNumber.push(i+1)
+        pageNumber.push(i)
     }
 
     return (
         <nav>
-            <ul className="paginado">
-                {
-                    pageNumber &&
-                    pageNumber.map(number => {
-                        <li className="number" key={number}>
-                            <a onClick={()=>pagination(number)} >{number}</a>
-                        </li>
-                    })
+            <div className="pagination">
+                { pageNumber && pageNumber.map((number, i) => (
+                        <button  className="number" key={i} onClick={()=>pagination(number)} >{number}</button>
+                    ))
                 }
-            </ul>
+            </div>
         </nav>
     )
 };
+
+
+
