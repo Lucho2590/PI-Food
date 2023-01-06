@@ -1,5 +1,5 @@
-const fetch = (url) =>
-    import ('node-fetch').then(({ default: fetch }) => fetch(url));
+// const fetch = (url) =>
+//     import ('node-fetch').then(({ default: fetch }) => fetch(url));
 const { Recipe, Diet } = require('../db')
 const axios = require("axios");
 
@@ -11,7 +11,7 @@ const axios = require("axios");
 const getRecipeApi = async() => {
 
     const { ApiKey1, ApiKey2, ApiKey3, ApiKey4, ApiKey5, ApiKey6, ApiKey00 } = process.env;
-    const apiKey = ApiKey2
+    const apiKey = ApiKey4
 
     const urlApi = await axios.get(`https://api.spoonacular.com/recipes/complexSearch?apiKey=${apiKey}&number=100&offset=100&addRecipeInformation=true`, { headers: { 'Accept-Encoding': 'identity' } })
     const infoApi = await urlApi.data.results.map((el) => {

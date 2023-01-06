@@ -2,41 +2,43 @@ import axios from 'axios';
 
 
 export function getRecipes() {
-    return async function(distpach) {
+    return async function(dispatch) {
             let json = await axios.get('http://localhost:3001/recipes');
-            return distpach({ type: 'GET_RECIPES', payload: json.data })
+            return dispatch({ type: 'GET_RECIPES', payload: json.data })
         }
-        // return async function(distpach) {
+        // return async function(dispatch) {
         //     return await fetch('http://localhost:3001/recipes')
         //         .then(response => response.json())
         //         .then((json) => {
-        //             return distpach({ type: 'GET_RECIPES', payload: json })
+        //             return dispatch({ type: 'GET_RECIPES', payload: json })
         //         })
         // }
-};
-
+}
 export function getDiets() {
-    return async function(distpach) {
+    return async function(dispatch) {
         let json = await axios.get('http://localhost:3001/diets')
-        return distpach({ type: 'GET_DIETS', payload: json.data })
+        return dispatch({ type: 'GET_DIETS', payload: json.data })
     }
 }
-
 export function getRecipeByName(name) {
-    return async function(distpach) {
+    return async function(dispatch) {
         let json = await axios.get(`http://localhost:3001/recipes?name=${name}`);
-        return distpach({ type: 'GET_NAME_RECIPES', payload: json.data })
+        return dispatch({ type: 'GET_NAME_RECIPES', payload: json.data })
     }
 }
 export function getDetail(id) {
-    return async function(distpach) {
+    return async function(dispatch) {
         let info = await axios.get(`http://localhost:3001/recipes/${id}`);
-        return distpach({ type: 'GET_DETAIL', payload: info.data })
+        return dispatch({ type: 'GET_DETAIL', payload: info.data })
+    }
+}
+export function cleanRecipeDetails(payload) {
+    return dispatch => {
+        dispatch({ type: 'CLEAN_RECIPE_DETAILS', payload })
     }
 };
-
 export function postRecipes(payload) {
-    return async function(distpach) {
+    return async function(dispatch) {
         const response = await axios.post('http://localhost:3001/recipes', payload)
         return response
     }

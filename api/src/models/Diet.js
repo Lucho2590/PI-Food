@@ -6,6 +6,11 @@ module.exports = (sequelize) => {
             type: DataTypes.STRING,
             allowNull: false
         },
+        createInDb: { // Se utiliza para buscar por ID unicamente que este en la DB. 
+            type: DataTypes.BOOLEAN,
+            allowNull: false,
+            defaultValue: true
+        },
     }, {
         timestamps: false,
     });

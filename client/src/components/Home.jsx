@@ -28,11 +28,7 @@ export default function Home (){
 const [currentPage, setCurrentPage] = useState(1) // Pagina actual que inicia en 1
 const [recipePerPage, /*setRecipePerPage*/] = useState(9) // Cantidad de recetas que se muestran por pagina
 const indexLastRecipe = currentPage * recipePerPage // Guardo en una constante el indice de la ultima receta, se multipllica la pagina actual por la cantidad de recetas por pagina.
-
-
 const indexFirstRecipe = indexLastRecipe - recipePerPage // guardo el indix de la primer recerta que se muestra en la pagina, restando la cantidad de recetas por pagina al index de la ultima receta en pagina.
-
-
 const currentRecipe = allRecipe.slice(indexFirstRecipe, indexLastRecipe) // selecciona las recetas segun los index de la pagina actual.
 
 
@@ -40,13 +36,13 @@ const pagination = (pageNumber)=>{
     setCurrentPage(pageNumber)
 }
 
-//////////////////////////////////////////////////////////
+
+////////////////////////// REFRESH BUTTOM ///////////////////////////////
 
 function handleClick(e){
 e.preventDefault();
 dispatch(getRecipes());
 }
-
 
 ///////////////////////////// FILTERS ////////////////////
 
@@ -110,8 +106,6 @@ return (
                 <br />
                 <button onClick={ e => {handleClick (e)}}>Refresh</button>
             </div>
-      
-            {/* <h4>Aca van los putos numeritos del paginado</h4> */}
             <div>
                 <Pagination pagination={pagination} recipePerPage={recipePerPage} allRecipes={allRecipe.length}/>
             </div>

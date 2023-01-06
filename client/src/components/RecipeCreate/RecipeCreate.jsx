@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from "react";
 import { Link, useHistory } from "react-router-dom";
-import { postRecipes } from "../../actions";
+import { postRecipes, getDiets } from "../../actions";
 import { useDispatch, useSelector } from "react-redux";
 
 export function RecipeCreate() {
@@ -13,9 +13,13 @@ export function RecipeCreate() {
         summary:'',
         healthScore:'',
         steps:'',
-        diets:[],
+        diet:[],
     })
 
+
+    useEffect(()=>{
+        dispatch(getDiets())
+    },[dispatch])
 
     function handleChange(e){
         setInput({
@@ -23,19 +27,30 @@ export function RecipeCreate() {
             [e.target.name]: e.target.value
         })
     }
+
     function handleSelect(e){
         setInput({
             ...input,
-            diets: [...input.diets, e.target.value]
+            diets: [...input.diet, e.target.value]
         })
+        console.log(input.diet)
     }
 
     function handleSubmit(e){
         e.preventDefault(e)
         dispatch(postRecipes(input))
-        console.log(input)
         alert('recipe created successfully')
+        setInput({
+            name:'',
+            image:'',
+            summary:'',
+            healthScore:'',
+            steps:'',
+            diet:[],
+        })
     }
+
+/////////////////////////////////////////////////////////////////
     return (
         <div>
             <Link to='/home'> <button>Home</button></Link>
@@ -45,7 +60,6 @@ export function RecipeCreate() {
                     <label>Name: </label>
                     <input 
                         type="text" 
-                        placeholder="Name" 
                         value={input.name} 
                         name='name' 
                         onChange={(e)=>handleChange(e)}/>
@@ -54,7 +68,6 @@ export function RecipeCreate() {
                     <label>Image:</label>
                     <input 
                         type="text" 
-                        placeholder="Image" 
                         value={input.image} 
                         name='image' 
                         onChange={(e)=>handleChange(e)}/>
@@ -63,7 +76,6 @@ export function RecipeCreate() {
                     <label>Summary: </label>
                     <input 
                         type="text" 
-                        placeholder="Sumarry" 
                         value={input.summary} 
                         name='summary' 
                         onChange={(e)=>handleChange(e)}/>
@@ -72,7 +84,6 @@ export function RecipeCreate() {
                     <label>Steps: </label>
                     <input 
                         type="text" 
-                        placeholder="Steps" 
                         value={input.steps} 
                         name='steps' 
                         onChange={(e)=>handleChange(e)}/>
@@ -86,20 +97,12 @@ export function RecipeCreate() {
                         onChange={(e)=>handleChange(e)} />
                 </div>
                 <div>
-                        <label>Diets: </label>
-                <select onChange={(e)=>handleSelect(e)}>
-                            <option value= 'dairy free'>Dairy free</option>
-                            <option value= 'gluten free'>Gluten free</option>
-                            <option value= 'lacto ovo vegetarian'>Lacto ovo vegetarian</option>
-                            <option value= 'vegan'>Vegan</option>
-                            <option value= 'pescatarian'>Pescatarian</option>
-                            <option value= 'fodmap firendly'>Fodmap firendly</option>
-                            <option value= 'whole 30'>Whole 30</option>
-                            <option value= 'primal'>Primal</option>
-                            <option value= 'paleolithic'>Paleolithic</option>
-                            <option value= 'ketogenic'>Ketogenic</option>
-                            <option value= 'other'>Other</option>
-                </select>
+                    <label>Diets: </label>
+                        <select onChange={(e)=>handleSelect(e)}>
+                            {diets.map(d => (
+                                 <option value={d.name}>{d.name}</option>
+                            ))}
+                        </select>
                 </div>
                 <ul><li>{input.diets.map(e => e + ", ")}</li></ul>
                 <button type="submit">Create</button>

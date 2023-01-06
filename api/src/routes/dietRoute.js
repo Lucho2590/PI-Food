@@ -1,12 +1,10 @@
 const { Router } = require('express');
-const { getApiDiets } = require('../controllers/dietControllers')
+const { getDbDiets } = require('../controllers/dietControllers')
 
 
 const router = Router();
 
-router.get('/', async(req, res) => {
-    res.status(200).json(await getApiDiets());
-});
+router.get('/', getDbDiets);
 
 
 module.exports = router;

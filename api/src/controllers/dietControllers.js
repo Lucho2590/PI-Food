@@ -1,56 +1,48 @@
-// const fetch = (url) =>
-//     import ("node-fetch").then(({ default: fetch }) => fetch(url));
 const { Recipe, Diet } = require("../db");
 const axios = require("axios");
 
 //////////////////////// AXIOS ////////////////////////////
 
-const getApiDiets = async() => {
-    const { ApiKey1, ApiKey2, ApiKey3 } = process.env;
+const getApiDiets = async(req, res, next) => {
+    const { ApiKey1, ApiKey2, ApiKey3, ApiKey4, ApiKey5, ApiKey6, ApiKey00 } = process.env;
     const apiKey = ApiKey3
+    try {
+        let dietUrl = await axios.get(`https://api.spoonacular.com/recipes/complexSearch?apiKey=${apiKey}&number=100&offset=100&addRecipeInformation=true`, { headers: { 'Accept-Encoding': 'identity' } })
+        let dietApi = await dietUrl.data.results.map(e => e.diets);
+        let finalDiets = []
+        let totalDietApi = dietApi.flat().forEach((elemento) => {
+                if (!finalDiets.includes(elemento)) {
+                    finalDiets.push(elemento);
+                }
+            })
+            // let totalDietApi = [...new Set(dietApi.flat())];
+        console.log(finalDiets)
 
-    const totalDietDb = Diet.findAll()
+        finalDiets.forEach(diet => {
+            Diet.findOrCreate({
+                where: {
+                    name: diet
+                }
+            })
+        });
+    } catch (error) {
+        next(error)
+    }
 
-    let dietUrl = await axios.get(`https://api.spoonacular.com/recipes/complexSearch?apiKey=${apiKey}&number=100&offset=100&addRecipeInformation=true`, { headers: { 'Accept-Encoding': 'identity' } })
-    let dietApi = await dietUrl.data.results.map(e => e.diets)
-    let totalDietApi = dietApi.flat()
-
-    totalDietApi.forEach(diet => {
-        Diet.findOrCreate({
-            where: {
-                name: diet
-            }
-        })
-    });
-
-    return await Diet.findAll()
 };
 
-///////////////////////////////  FETCH  ////////////////////////////////
+// esta función retorna lo guardado en la db (no se gastan pedidos a la API) se ejecuta en la ruta '/diets
+const getDbDiets = async(req, res, next) => {
+    try {
+        const dietsDb = await Diet.findAll()
+        res.send(dietsDb)
+    } catch (error) {
+        next(error)
+    }
+};
 
-// const getApiDiets = async() => {
-//     const { ApiKey1, ApiKey2, ApiKey3 } = process.env;
-//     const apiKey = ApiKey1
-
-//     let diets = await Diet.findAll();
-
-//     if (diets.length) return diets;
-
-//     const apiData = await fetch(`https://api.spoonacular.com/recipes/complexSearch?apiKey=${apiKey}&number=100&offset=100&addRecipeInformation=true`)
-//         .then((response) => response.json())
-//         .then((data) => data.results.map((element) => element.diets));
-
-//     const dietsArray = [...new Set(apiData.flat())];
-
-//     dietsArray.forEach(diet => {
-//         Diet.findOrCreate({
-//             where: { name: diet }
-//         })
-//     })
-
-//     return await Diet.findAll();
-// };
 
 module.exports = {
-    getApiDiets
+    getApiDiets,
+    getDbDiets
 };

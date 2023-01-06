@@ -28,6 +28,8 @@ function rootReducer(state = initialState, action) {
                 ...state,
                 detail: action.payload
             }
+        case 'CLEAN_RECIPE_DETAILS':
+            return {...state, detail: action.payload }
         case 'POST_RECIPE':
             return {
                 ...state,

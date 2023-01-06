@@ -44,7 +44,7 @@ router.get('/:idReceta', async(req, res, next) => {
 
 
 router.post('/', async(req, res, next) => {
-    const { id, name, image, summary, healthScore, step, createdInDB, diet } = req.body
+    const { id, name, image, summary, healthScore, steps, createdInDB, diet } = req.body
 
     try {
         const recipeCreated = await Recipe.create({
@@ -53,7 +53,7 @@ router.post('/', async(req, res, next) => {
             image,
             summary,
             healthScore,
-            step,
+            steps,
             createdInDB
         })
 

@@ -5,7 +5,7 @@ import React from "react";
 export default function Card ({name, image, diets, id, healtScore}){
         
     return (
-        <Link to={`/recipe/${id}`}>
+        <Link to={`/recipes/${id}`}>
         <div>
             <h2>{name}</h2>
             <img src={image} alt="Recipe.jpg not found" />
