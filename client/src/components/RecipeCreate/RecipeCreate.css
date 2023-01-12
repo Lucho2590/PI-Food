@@ -1,0 +1,18 @@
+.container_create {
+    background-image: URL('../img/create.jpg');
+    width: 100vw;
+    height: 100vh;
+    background-position: center;
+    background-size: cover;
+    position: relative;
+    display: flex;
+}
+
+.data_create {
+    position: absolute;
+    border: 4px solid black;
+    width: 45%;
+    height: 60%;
+    top: 18%;
+    left: 28%
+}

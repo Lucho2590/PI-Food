@@ -39,6 +39,7 @@ export function cleanRecipeDetails(payload) {
 };
 export function postRecipes(payload) {
     return async function(dispatch) {
+        console.log('payload', payload)
         const response = await axios.post('http://localhost:3001/recipes', payload)
         return response
     }
@@ -50,12 +51,12 @@ export function filterDiets(payload) {
         payload
     }
 };
-// export function filterCreated(payload) {
-//     return {
-//         type: 'FILTER_CREATED',
-//         payload
-//     }
-// };
+export function filterCreated(payload) {
+    return {
+        type: 'FILTER_CREATED',
+        payload
+    }
+};
 export function orderByName(payload) {
     return {
         type: 'ORDER_BY_NAME',

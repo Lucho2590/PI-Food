@@ -1,0 +1,9 @@
+.buttonPage {
+    border: none;
+    background-color: transparent;
+    font-size: 20px;
+}
+
+.buttonPage:hover {
+    font-size: 30px;
+}

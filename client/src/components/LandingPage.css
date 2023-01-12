@@ -1,0 +1,52 @@
+.body {
+    background-image: url('./img/landing.jpg');
+    width: 100vw;
+    height: 100vh;
+    background-position: center;
+    background-size: cover;
+    position: relative;
+    display: flex;
+}
+
+.libreta {
+    position: relative;
+    /* border: 5px solid black; */
+    display: flex;
+    justify-content: flex-end;
+    width: 500px;
+    height: 720px;
+    top: 15%;
+    left: 69%;
+    right: inherit;
+}
+
+.title {
+    position: absolute;
+    display: flex;
+    color: #195660;
+    top: 10%;
+    left: 15%
+}
+
+.button {
+    top: 75%;
+    left: 30%;
+    display: flex;
+    background-color: #813c40;
+    border-radius: 29px;
+    border: 1px solid #813c40;
+    color: white;
+    font-size: 25px;
+    padding: 30px 70px;
+    cursor: pointer;
+    transition: 0.3s;
+    position: absolute;
+}
+
+.button:hover {
+    background-color: white;
+    color: #5C3232;
+    border-color: #5C3232;
+    border: 5px solid #5C3232;
+    transition: 0.3s;
+}

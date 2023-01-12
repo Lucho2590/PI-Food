@@ -36,9 +36,17 @@ function rootReducer(state = initialState, action) {
             }
         case 'FILTER_BY_DIETS':
             const allRecipes = state.allRecipe;
-            const dietsFilter = action.payload === 'all diets' ? allRecipes : allRecipes.filter(e => e.diets.some(d => d.toLowerCase() === action.payload.toLowerCase()))
-            return {...state,
+            const dietsFilter = action.payload === 'all diets' ? allRecipes : allRecipes.filter(e => e.diets.some(d => d === action.payload))
+            return {
+                ...state,
                 recipes: dietsFilter
+            }
+        case 'FILTER_CREATED':
+            const allCreated = state.allRecipe;
+            const createdFilter = action.payload === 'Created' ? allCreated.filter(e => e.createInDb) : state.allRecipe.filter(e => !e.createInDb)
+            return {
+                ...state,
+                recipes: action.payload === 'All' ? state.allRecipe : createdFilter
             }
         case 'ORDER_BY_NAME':
             const sortedArr = action.payload === 'asc' ? state.recipes.sort(

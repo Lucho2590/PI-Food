@@ -1,0 +1,37 @@
+.pagination {
+    padding: 20px;
+}
+
+.container_nav {
+    border: 2px solid black;
+    flex-direction: row;
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+}
+
+.filters {
+    display: flex;
+    flex-direction: row;
+    border: 2px solid green;
+    padding: 10px;
+    gap: 20px;
+}
+
+.serchBar {
+    margin-top: 10px;
+}
+
+.createButton {
+    margin-top: 10px;
+}
+
+.card {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px
+}
+
+.cartas {
+    border: 2px solid, red;
+}

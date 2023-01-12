@@ -1,6 +1,6 @@
 // const fetch = (url) =>
 //     import ('node-fetch').then(({ default: fetch }) => fetch(url));
-const { Recipe, Diet } = require('../db')
+const { Recipe, Diets } = require('../db')
 const axios = require("axios");
 
 
@@ -11,9 +11,9 @@ const axios = require("axios");
 const getRecipeApi = async() => {
 
     const { ApiKey1, ApiKey2, ApiKey3, ApiKey4, ApiKey5, ApiKey6, ApiKey00 } = process.env;
-    const apiKey = ApiKey4
+    const apiKey = ApiKey3
 
-    const urlApi = await axios.get(`https://api.spoonacular.com/recipes/complexSearch?apiKey=${apiKey}&number=100&offset=100&addRecipeInformation=true`, { headers: { 'Accept-Encoding': 'identity' } })
+    const urlApi = await axios.get(`https://api.spoonacular.com/recipes/complexSearch?apiKey=${apiKey}&addRecipeInformation=true&number=100&offset=100`, { headers: { 'Accept-Encoding': 'identity' } })
     const infoApi = await urlApi.data.results.map((el) => {
         return {
             id: el.id,
@@ -69,7 +69,7 @@ const getRecipeApi = async() => {
 const getRecipeDb = async() => {
     return await Recipe.findAll({
         include: {
-            model: Diet,
+            model: Diets,
             attributes: ["name"],
             through: {
                 attributes: [],
@@ -86,6 +86,7 @@ const getRecipeAll = async() => {
     let api = await getRecipeApi();
     let db = await getRecipeDb();
     let all = api.concat(db);
+    // let all = [...db, ...api]
 
     return all;
 };
