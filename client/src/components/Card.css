@@ -1,10 +1,11 @@
 .container {
     position: relative;
-    padding: 20px;
+    opacity: 1;
+    background-color: #fff;
+    border-radius: 20px;
 }
 
 .receta {
-    border: 2px solid red;
     border-radius: 20px;
     padding: 20px;
     position: relative;

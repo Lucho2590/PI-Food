@@ -29,7 +29,10 @@ function rootReducer(state = initialState, action) {
                 detail: action.payload
             }
         case 'CLEAN_RECIPE_DETAILS':
-            return {...state, detail: action.payload }
+            return {
+                ...state,
+                detail: action.payload
+            }
         case 'POST_RECIPE':
             return {
                 ...state,
@@ -51,19 +54,23 @@ function rootReducer(state = initialState, action) {
         case 'ORDER_BY_NAME':
             const sortedArr = action.payload === 'asc' ? state.recipes.sort(
                     function(a, b) {
-                        if (a.name > b.name) {
+                        const na = a.name.toUpperCase()
+                        const nb = b.name.toUpperCase()
+                        if (na > nb) {
                             return 1;
                         }
-                        if (b.name > a.name) {
+                        if (nb > na) {
                             return -1
                         }
                         return 0;
                     }) :
                 state.recipes.sort(function(a, b) {
-                    if (a.name > b.name) {
+                    const na = a.name.toUpperCase()
+                    const nb = b.name.toUpperCase()
+                    if (na > nb) {
                         return -1;
                     }
-                    if (b.name > a.name) {
+                    if (nb > na) {
                         return 1;
                     }
                     return 0;

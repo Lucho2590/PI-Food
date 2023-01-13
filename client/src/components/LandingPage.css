@@ -13,11 +13,10 @@
     /* border: 5px solid black; */
     display: flex;
     justify-content: flex-end;
-    width: 500px;
-    height: 720px;
-    top: 15%;
+    width: 26%;
+    height: 65%;
+    top: 20%;
     left: 69%;
-    right: inherit;
 }
 
 .title {
@@ -25,12 +24,12 @@
     display: flex;
     color: #195660;
     top: 10%;
-    left: 15%
+    left: 25%;
 }
 
 .button {
     top: 75%;
-    left: 30%;
+    left: 23%;
     display: flex;
     background-color: #813c40;
     border-radius: 29px;

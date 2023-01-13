@@ -1,37 +1,81 @@
-.pagination {
-    padding: 20px;
-}
-
-.container_nav {
-    border: 2px solid black;
-    flex-direction: row;
-    display: flex;
-    gap: 20px;
-    justify-content: center;
-}
-
-.filters {
-    display: flex;
-    flex-direction: row;
-    border: 2px solid green;
-    padding: 10px;
-    gap: 20px;
-}
-
-.serchBar {
-    margin-top: 10px;
-}
-
-.createButton {
-    margin-top: 10px;
-}
-
-.card {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 20px
-}
-
-.cartas {
-    border: 2px solid, red;
-}
+    .container_global {
+        background-image: url('./img/home.jpg');
+        position: relative;
+    }
+    
+    .header {
+        width: 100%;
+        border: 4px solid transparent;
+        height: 34%;
+    }
+    
+    .info_recipe {
+        /* border: 4px solid red; */
+        top: 30%;
+        padding: 20px;
+    }
+    
+    .loading {
+        /* border: 2px solid yellow; */
+        width: 400px;
+        height: 100vh;
+        position: relative;
+        left: 38%;
+    }
+    
+    .loading_h5 {
+        top: 35%;
+        position: relative;
+        color: #fff;
+        font-size: 20px;
+    }
+    
+    .tittle {
+        margin: 40px;
+        /* border: 2px solid black; */
+    }
+    
+    .pagination {
+        padding: 20px;
+    }
+    
+    .container_nav {
+        /* border: 2px solid black; */
+        background-color: #813c40;
+        flex-direction: row;
+        width: 100%;
+        color: #fff;
+        display: flex;
+        gap: 20px;
+        justify-content: center;
+    }
+    
+    .filters {
+        display: flex;
+        flex-direction: row;
+        /* border: 2px solid green; */
+        padding: 10px;
+        gap: 20px;
+    }
+    
+    .serchBar {
+        margin-top: 10px;
+        justify-content: flex-end;
+    }
+    
+    .createButton {
+        margin-top: 10px;
+    }
+    /* .pagination {
+        border: 2px solid orange;
+    } */
+    
+    .card {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 40px;
+        color: #fff;
+    }
+    /* .cartas {
+        border: 2px solid, red;
+    } */

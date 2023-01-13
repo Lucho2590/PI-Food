@@ -96,7 +96,7 @@ export function RecipeCreate() {
             <h1>Create Recipe</h1>
             <form onSubmit={e=> handleSubmit(e)}>
                 <div>
-                    <label>Name: </label>
+                    <label>Name:</label>
                     <input 
                         type="text" 
                         value={input.name} 

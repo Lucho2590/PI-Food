@@ -7,7 +7,11 @@ export default function LandingPage(){
         <div className="body">
             <div className="libreta">
                 <div className="title">
-                    <h1 >Welcome to HenryFood</h1>
+                    <h1 >
+                        Welcome to 
+                        <br/>
+                        HenryFood
+                    </h1>
                 </div>
                 <div>
                     <Link to={"/home"}>

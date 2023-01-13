@@ -70,6 +70,16 @@ router.post('/', async(req, res, next) => {
     }
 });
 
+router.delete('/:id/delete', async(req, res, next) => {
+    const { id } = req.params;
+    try {
+        let recipeDelete = await Recipe.findByPk(id)
+        recipeDelete.destroy();
+        res.status(201).send("Recipe deleted correctly");
+    } catch (err) {
+        next(err)
+    }
+})
 
 
 module.exports = router;
