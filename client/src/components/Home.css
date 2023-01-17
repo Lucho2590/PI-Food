@@ -32,6 +32,7 @@
     
     .tittle {
         margin: 40px;
+        color: #fff;
         /* border: 2px solid black; */
     }
     
@@ -47,7 +48,6 @@
         color: #fff;
         display: flex;
         gap: 20px;
-        justify-content: center;
     }
     
     .filters {
@@ -68,6 +68,9 @@
     }
     /* .pagination {
         border: 2px solid orange;
+    } */
+    /* .background_card {
+        opacity: 0.5;
     } */
     
     .card {

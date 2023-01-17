@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from "react";
 import { Link, useHistory } from "react-router-dom";
-import { postRecipes, getDiets } from "../../actions";
+import { postRecipes, getDiets, getRecipes } from "../../actions";
 import { useDispatch, useSelector } from "react-redux";
 import './RecipeCreate.css'
 
@@ -8,11 +8,11 @@ function validate(input){
     let error = {}
     if(!input.name.trim()){error.name = 'Add a name to your recipe'}
     else if(parseInt(input.name)){error.name = 'Invalid name, should contain at least one letter at the beginning'}
-    if(!input.image){error.image = 'Upload an image'}
+    // if(!input.image){error.image = 'Upload an image'}
     if(!input.summary.trim()){error.summary = 'Add a summary of your recipe'}
     else if(parseInt(input.summary)){error.summary = 'Summary should contain at least one letter at the beginning'}
     if(input.healthScore < 0 || input.healthScore > 100){error.healthScore = 'The healtscore should be a number between 1 and 100'}
-    if(!input.steps){error.steps = 'Add the steps for your recipe'}
+    // if(!input.steps){error.steps = 'Add the steps for your recipe'}
     if(!input.diets.length){error.diets = 'You must select at least one diet type'}
     return error
 }
@@ -34,8 +34,8 @@ export function RecipeCreate() {
 
 
     useEffect(()=>{
-        dispatch(getDiets())
-    },[dispatch])
+       if(!diets.length) dispatch(getDiets())
+    },[])
 
     function handleChange(e){
         setInput({
@@ -60,10 +60,22 @@ export function RecipeCreate() {
         // console.log(input.diets)
     }
 
+    function handleDelete(e){
+        setInput({
+            ...input,
+            diets: input.diets.filter( d => d !== e)
+        })
+        setError(validate({
+            ...input,
+            diets: input.diets.filter( d => d !== e)
+        }))
+    }
+
     function handleSubmit(e){
         e.preventDefault(e)
         dispatch(postRecipes(input))
         alert('recipe created successfully')
+        dispatch(getRecipes())
         setInput({
             name:'',
             image:'',
@@ -75,16 +87,6 @@ export function RecipeCreate() {
         history.push('/home')
     }
 
-    function handleDelete(e){
-        setInput({
-            ...input,
-            diets: input.diets.filter( d => d !== e)
-        })
-        setError(validate({
-            ...input,
-            diets: input.diets.filter( d => d !== e)
-        }))
-    }
     const disabled = Object.keys(error).length || !input.name 
  
 
@@ -99,6 +101,7 @@ export function RecipeCreate() {
                     <label>Name:</label>
                     <input 
                         type="text" 
+                        className="input"
                         value={input.name} 
                         name='name' 
                         onChange={(e)=>handleChange(e)}/>
@@ -108,15 +111,17 @@ export function RecipeCreate() {
                     <label>Image:</label>
                     <input 
                         type="text" 
+                        className="input"
                         value={input.image} 
                         name='image' 
                         onChange={(e)=>handleChange(e)}/>
-                        {error.image && (<span className="error">{error.image}</span>)}
+                        {/* {error.image && (<span className="error">{error.image}</span>)} */}
                 </div>
                 <div>
                     <label>Summary: </label>
                     <input 
                         type="text" 
+                        className="input"
                         value={input.summary} 
                         name='summary' 
                         onChange={(e)=>handleChange(e)}/>
@@ -124,17 +129,21 @@ export function RecipeCreate() {
                 </div>
                 <div>
                     <label>Steps: </label>
-                    <input 
+                    <textarea
                         type="text" 
+                        className="input"
                         value={input.steps} 
                         name='steps' 
+                        rows='4'
+                        cols='40'
                         onChange={(e)=>handleChange(e)}/>
-                        {error.steps && (<span className="error">{error.step}</span>)}
+                        {/* {error.steps && (<span className="error">{error.step}</span>)} */}
                 </div>
                 <div>
                     <label>Health Score:</label>
                     <input 
                         type="number" 
+                        className="input"
                         value={input.healthScore} 
                         name='healthScore' 
                         onChange={(e)=>handleChange(e)} />
@@ -159,7 +168,6 @@ export function RecipeCreate() {
                 </div>
                 </div>
                 <button disabled={disabled} type="submit">Create</button>
-    
             </form>
             </div>
         </div>

@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 import {useDispatch, useSelector} from 'react-redux';
-import { getRecipes, filterDiets, orderByName, orderHealthScore, filterCreated} from '../actions';
+import { getRecipes, getDiets, filterDiets, orderByName, orderHealthScore, filterCreated, cleanAllFilters} from '../actions';
 import Card from "./Card";
 import SerchBar from "./serchBar/serchBar";
 import Pagination from "./Pagination/Pagination";
@@ -14,59 +14,54 @@ import './Home.css'
 export default function Home (){
      const dispatch = useDispatch();
      const allRecipe = useSelector((state)=> state.recipes)
+     const allDiets= useSelector((state)=>state.diets)
+     const page = useSelector(state => state.currentPage)
      const [/*order*/, setOrder]= useState('')
 
 
      useEffect(()=>{
-        dispatch(getRecipes());
-        // dispatch(getDiets())
-     },[dispatch]);
+        if(!allRecipe.length)dispatch(getRecipes());
+        if(!allDiets.length)dispatch(getDiets())
+     },[]);
 
 /////////////////////////////////////////////////////////
 
 ///////////////////// PAGINATION ///////////////////////// 
 
-const [currentPage, setCurrentPage] = useState(1) // Pagina actual que inicia en 1
-const [recipePerPage, /*setRecipePerPage*/] = useState(9) // Cantidad de recetas que se muestran por pagina
-const indexLastRecipe = currentPage * recipePerPage // Guardo en una constante el indice de la ultima receta, se multipllica la pagina actual por la cantidad de recetas por pagina.
-const indexFirstRecipe = indexLastRecipe - recipePerPage // guardo el indix de la primer recerta que se muestra en la pagina, restando la cantidad de recetas por pagina al index de la ultima receta en pagina.
-const currentRecipe = allRecipe.slice(indexFirstRecipe, indexLastRecipe) // selecciona las recetas segun los index de la pagina actual.
-
-
-const pagination = (pageNumber)=>{
-    setCurrentPage(pageNumber)
-}
+const recipePerPage = 9;
+const lasRecipe = page * recipePerPage // 1 * 9 = 9
+const firstRecipe = lasRecipe-recipePerPage // 9 - 9 = 0
+const recipesPage = allRecipe.slice(firstRecipe, lasRecipe)
 
 
 ////////////////////////// REFRESH BUTTOM ///////////////////////////////
 
 function handleClick(e){
 e.preventDefault();
-dispatch(getRecipes());
+dispatch(cleanAllFilters());
 }
 
 
 ///////////////////////////// FILTERS ////////////////////
 
-function handleFilterbyDiets(e){
-dispatch(filterDiets(e.target.value))
-}
-
 function handlefilterCreated(e){
     dispatch(filterCreated(e.target.value))
 }
 
+function handleFilterbyDiets(e){
+dispatch(filterDiets(e.target.value))
+}
+
+
 function handleSortName(e){
 e.preventDefault()
 dispatch(orderByName(e.target.value))
-setCurrentPage(1)
 setOrder(`Ordenado ${e.target.value}`)
 }
 
 function handleSortHealth(e){
 e.preventDefault()
 dispatch(orderHealthScore(e.target.value))
-setCurrentPage(1)
 setOrder(`Ordenado ${e.target.value}`)
 }
 
@@ -77,12 +72,19 @@ return (
     <div className="container_global">
         <div className="header">
             <div className="tittle">
-                <h1>Recipe List:</h1>
+                <h1>Henry Food</h1>
             </div>
             <div className="container_nav">
                 <div className="filters">
                     <div className="dietsFilter">
-                        <label> Diets: </label>
+                    <label>Diets: </label>
+                        <select onChange={(e)=>handleFilterbyDiets(e)}>
+                            {allDiets.map(d => (
+                                 <option value={d.name}>{d.name}</option>
+                            ))}
+                            {/* {error.diets && (<option>{error.diets}</option>)} */}
+                        </select>
+                        {/* <label> Diets: </label>
                         <select onChange={e => handleFilterbyDiets(e)}>
                             <option value= 'all diets'>All diets</option>
                             <option value= 'dairy free'>Dairy free</option>
@@ -96,7 +98,7 @@ return (
                             <option value= 'paleolithic'>Paleolithic</option>
                             <option value= 'ketogenic'>Ketogenic</option>
                             <option value= 'Other'>Other</option>
-                        </select>
+                        </select> */}
                     </div>
                     <div>
                         <label>My recipe: </label> 
@@ -107,14 +109,14 @@ return (
                         </select>
                     </div>
                     <div className="orderName">
-                        <lable>Order Name:  </lable>
+                        <label>Order Name:  </label>
                         <select onChange={e => handleSortName(e)}>
                             <option value= 'asc'>A-Z</option>
                             <option value= 'desc'>Z-A</option>
                         </select>
                     </div>
                     <div className="orderHealth">
-                        <lablel> Heatlh Score: </lablel>
+                        <label> Heatlh Score: </label>
                         <select onChange={e => handleSortHealth(e)}>
                             <option value= 'asc'>Ascendent</option>
                             <option value= 'desc'>Descendent</option>
@@ -123,14 +125,14 @@ return (
                     <button className="refreshButton" onClick={ e => {handleClick (e)}}>Clean filter</button>
                 </div>
                 <div className="createButton">
-                    <Link to='/recipe'> <button>Create recipe</button></Link>
+                    <Link to='/recipe' > <button>Create recipe</button></Link>
                 </div>
                 <div className="serchBar">
                     <SerchBar/>
                 </div>
             </div>
             <div className="pagination">
-                <Pagination pagination={pagination} recipePerPage={recipePerPage} allRecipes={allRecipe.length} currentPage={currentPage}/>
+                <Pagination recipePerPage={recipePerPage} allRecipes={allRecipe.length} />
             </div>
         </div>
         <div className="info_recipe">
@@ -140,19 +142,21 @@ return (
                 <h5 className="loading_h5">Loading...</h5>
             </div> :    
              <div className="card">
-                {/* <Link to = '/recipes'>Find Recipes </Link> */}
-                {currentRecipe?.map((r)=>{
+                {recipesPage?.map((r)=>{
                         return (
-                        <div className='cartas' >
-                            <Link to={`/recipe/:${r.id}`}>
-                                <Card 
-                                name={r.name} 
-                                image={r.image} 
-                                diets={r.diets} 
-                                healtScore={r.healthScore} 
-                                id={r.id}/>
-                            </Link>
-                        </div>  
+                        <div className="background_card">
+                            <div className='cartas' >
+                                <Link to={`/recipe/:${r.id}`} key = {r.id}>
+                                    <Card 
+                                    name={r.name} 
+                                    image={r.image} 
+                                    diets={r.diets} 
+                                    healtScore={r.healthScore} 
+                                    id={r.id}
+                                    createInDb={r.createInDb}/>
+                                </Link>
+                            </div>  
+                        </div>
                     )                  
                 })}
             </div>}

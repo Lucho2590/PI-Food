@@ -37,7 +37,7 @@ export default function Detail(){
                   {details[0].createInDb ? <button onClick={handleDelete}>ELIMINAR</button> : " "} 
                   </div>
                   <h1>{details[0].name}</h1>
-                  <img className="img_detail" src={details[0].image} alt='image not found' />
+                  <img className="img_detail" src={details[0].image} alt='not found' />
                   <h3 >Health Score: {details[0].healthScore}</h3>
                   <p>Summary: {details[0].summary}</p>
                   <h5> Steps: {!details[0].createInDb? details[0].steps.map(s => s.map(e=> <ul><li>{e.do}</li></ul>)) : details[0].steps}</h5>

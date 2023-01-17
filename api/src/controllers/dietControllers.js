@@ -4,10 +4,10 @@ const axios = require("axios");
 //////////////////////// AXIOS ////////////////////////////
 
 const getApiDiets = async(req, res, next) => {
-    const { ApiKey1, ApiKey2, ApiKey3, ApiKey4, ApiKey5, ApiKey6, ApiKey00 } = process.env;
-    const apiKey = ApiKey3
+    const { ApiKey } = process.env;
+
     try {
-        let dietUrl = await axios.get(`https://api.spoonacular.com/recipes/complexSearch?apiKey=${apiKey}&number=100&offset=100&addRecipeInformation=true`, { headers: { 'Accept-Encoding': 'identity' } })
+        let dietUrl = await axios.get(`https://api.spoonacular.com/recipes/complexSearch?apiKey=${ApiKey}&number=100&offset=100&addRecipeInformation=true`, { headers: { 'Accept-Encoding': 'identity' } })
         let dietApi = await dietUrl.data.results.map(e => e.diets);
         let finalDiets = []
         let totalDietApi = dietApi.flat().forEach((elemento) => {

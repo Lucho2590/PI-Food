@@ -2,7 +2,8 @@ const initialState = {
     recipes: [],
     allRecipe: [],
     detail: [],
-    diets: []
+    diets: [],
+    currentPage: 1
 }
 
 function rootReducer(state = initialState, action) {
@@ -103,6 +104,19 @@ function rootReducer(state = initialState, action) {
                 ...state,
                 sortedArrHealth
             }
+        case 'CLEAN_FILTERS':
+            return {
+                ...state,
+                recipes: state.allRecipe,
+                currentPage: 1
+            }
+
+        case 'CURRENT_PAGE':
+            return {
+                ...state,
+                currentPage: action.payload
+            }
+
         default:
             return state;
     }

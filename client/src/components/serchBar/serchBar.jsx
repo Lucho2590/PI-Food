@@ -6,7 +6,7 @@ import { getRecipeByName } from "../../actions"
 
 export default function SerchBar(){
     const dispatch = useDispatch();
-    const [name, setName]=useState(' ')
+    const [name, setName]=useState('')
 
 function handleImputChange(e){
     e.preventDefault()
@@ -15,7 +15,12 @@ function handleImputChange(e){
 
 function handleSubmit(e){
     e.preventDefault()
-    dispatch(getRecipeByName(name))
+    try{
+        dispatch(getRecipeByName(name))
+    }catch(error){
+        return error
+    }
+    setName('')
 }
 
 return (
@@ -24,7 +29,4 @@ return (
             <button type='submit' onClick={(e)=> handleSubmit(e)}>Search</button>
         </div>
         )
-
-
-
 }

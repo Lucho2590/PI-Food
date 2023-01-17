@@ -10,10 +10,10 @@ const axios = require("axios");
 
 const getRecipeApi = async() => {
 
-    const { ApiKey1, ApiKey2, ApiKey3, ApiKey4, ApiKey5, ApiKey6, ApiKey00 } = process.env;
-    const apiKey = ApiKey3
+    const { ApiKey } = process.env;
 
-    const urlApi = await axios.get(`https://api.spoonacular.com/recipes/complexSearch?apiKey=${apiKey}&addRecipeInformation=true&number=100&offset=100`, { headers: { 'Accept-Encoding': 'identity' } })
+
+    const urlApi = await axios.get(`https://api.spoonacular.com/recipes/complexSearch?apiKey=${ApiKey}&addRecipeInformation=true&number=100&offset=100`, { headers: { 'Accept-Encoding': 'identity' } })
     const infoApi = await urlApi.data.results.map((el) => {
         return {
             id: el.id,
@@ -38,10 +38,10 @@ const getRecipeApi = async() => {
 
 // const getRecipeApi = async() => {
 
-//     const { ApiKey1, ApiKey2, ApiKey3 } = process.env;
-//     const apiKey = ApiKey1
+//     const { ApiKey } = process.env;
+//    
 
-//     const dataApi = await fetch(`https://api.spoonacular.com/recipes/complexSearch?apiKey=${apiKey}&number=100&offset=100&addRecipeInformation=true`)
+//     const dataApi = await fetch(`https://api.spoonacular.com/recipes/complexSearch?apiKey=${ApiKey}&number=100&offset=100&addRecipeInformation=true`)
 //     const data = await dataApi.json()
 //         // .then((response) => response.json())
 //     return data.results.map((el) => {

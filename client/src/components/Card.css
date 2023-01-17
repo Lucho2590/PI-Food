@@ -1,12 +1,18 @@
 .container {
     position: relative;
     opacity: 1;
-    background-color: #fff;
+    color: black;
     border-radius: 20px;
+    /* border: 2px solid black; */
+    background-image: url('./img/card.png');
 }
 
 .receta {
     border-radius: 20px;
-    padding: 20px;
+    padding: 10px;
     position: relative;
+}
+
+.image {
+    border-radius: 20px;
 }
